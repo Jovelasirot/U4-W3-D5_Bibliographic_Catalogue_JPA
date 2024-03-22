@@ -50,7 +50,7 @@ public class DataBaseQueries {
                 System.out.println("4 - Filter catalog by year");
                 System.out.println("5 - Search by author");
                 System.out.println("6 - Search by title");
-                System.out.println("7 - Search lent catalog elements with user card number");
+                System.out.println("7 - Search lent catalog element with user card number");
                 System.out.println("8 - View all expired loans");
                 System.out.println("9 - View catalog");
                 System.out.println("10 - View all users");
@@ -87,6 +87,7 @@ public class DataBaseQueries {
                     case 7:
                         searchLentElementsWithUserCardNumber(lDAO);
                         break;
+
 
                     case 8:
                         lDAO.getExpiredLoans().forEach(System.out::println);
@@ -138,7 +139,7 @@ public class DataBaseQueries {
 
             try {
                 releaseDate = LocalDate.parse(releaseDateInput);
-                System.out.println("Release date of the book was added successfully");
+                System.out.println("Release date added successfully");
                 validReleaseDate = true;
 
             } catch (DateTimeParseException e) {
@@ -186,7 +187,7 @@ public class DataBaseQueries {
 
             try {
                 releaseDate = LocalDate.parse(releaseDateInput);
-                System.out.println("Release date  of the magazine was added successfully");
+                System.out.println("Release date added successfully");
                 validReleaseDate = true;
 
             } catch (DateTimeParseException e) {
