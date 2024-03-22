@@ -12,6 +12,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class DataBaseQueries {
@@ -34,44 +35,59 @@ public class DataBaseQueries {
     public static void handleUserAction(CatalogDAO cDAO, LoanDAO lDAO, UserDAO uDAO) {
         Scanner sc = new Scanner(System.in);
         int handleAction;
+
         do {
-            System.out.println();
-            System.out.println("What do you want to do?");
-            System.out.println("1 - Add book");
-            System.out.println("2 - Add magazine");
-            System.out.println("3 - Delete by ISBN");
-            System.out.println("4 - Filter catalog by year");
-            System.out.println("0 - Terminate the program.");
+            try {
 
-            handleAction = sc.nextInt();
-            sc.nextLine();
 
-            switch (handleAction) {
-                case 1:
-                    addBook(cDAO);
-                    break;
+                System.out.println();
+                System.out.println("What do you want to do?");
+                System.out.println("1 - Add book");
+                System.out.println("2 - Add magazine");
+                System.out.println("3 - Delete by ISBN");
+                System.out.println("4 - Filter catalog by year");
+                System.out.println("5 - Search by author");
+                System.out.println("0 - Terminate the program.");
 
-                case 2:
-                    addMagazine(cDAO);
-                    break;
+                handleAction = sc.nextInt();
+                sc.nextLine();
 
-                case 3:
-                    deleteWithISBN(cDAO);
-                    break;
+                switch (handleAction) {
+                    case 1:
+                        addBook(cDAO);
+                        break;
 
-                case 4:
-                    searchByYear(cDAO);
-                    break;
+                    case 2:
+                        addMagazine(cDAO);
+                        break;
 
-                case 0:
-                    System.out.println("Terminating program =͟͟͞͞ =͟͟͞͞ ﾍ ( ´ Д `)ﾉ");
-                    break;
+                    case 3:
+                        deleteWithISBN(cDAO);
+                        break;
 
-                default:
-                    System.out.println("Invalid action. Please try again.");
-                    break;
+                    case 4:
+                        searchByYear(cDAO);
+                        break;
+
+                    case 5:
+                        searchByAuthor(cDAO);
+                        break;
+
+                    case 0:
+                        System.out.println("Terminating program =͟͟͞͞ =͟͟͞͞ ﾍ ( ´ Д `)ﾉ");
+                        break;
+
+                    default:
+                        System.out.println("Invalid action. Please try again.");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input, type a number.");
+                System.out.println("-------------");
+                handleAction = -1;
+                sc.nextLine();
+
             }
-
         } while (handleAction != 0);
         sc.close();
     }
@@ -121,8 +137,6 @@ public class DataBaseQueries {
         String title = sc.nextLine();
 
         System.out.println("Release date of the magazine (Y-M-D):");
-
-        System.out.println("Release date of the book (Y-M-D):");
         String releaseDateInput = sc.nextLine();
         LocalDate releaseDate = LocalDate.parse(releaseDateInput);
 
@@ -164,5 +178,14 @@ public class DataBaseQueries {
         int yearInput = sc.nextInt();
 
         cDAO.catalogListBasedOnYear(yearInput).forEach(System.out::println);
+    }
+
+    public static void searchByAuthor(CatalogDAO cDAO) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Type the author (even just the initials):");
+        String authorInput = sc.nextLine();
+
+        cDAO.searchByAuthor(authorInput).forEach(System.out::println);
     }
 }

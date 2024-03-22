@@ -1,5 +1,6 @@
 package DAO;
 
+import entities.Book;
 import entities.Catalog;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -51,6 +52,13 @@ public class CatalogDAO {
         catalogYearListQuery.setParameter("year", year);
 
         return catalogYearListQuery.getResultList();
+    }
+
+    public List<Book> searchByAuthor(String author) {
+        TypedQuery<Book> authorQuery = this.em.createQuery("SELECT b FROM Book b WHERE LOWER(b.author) LIKE LOWER(:author)", Book.class);
+        authorQuery.setParameter("author", author + "%");
+
+        return authorQuery.getResultList();
     }
 
     public Catalog findById(long elementId) {
