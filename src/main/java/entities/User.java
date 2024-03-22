@@ -1,8 +1,11 @@
 package entities;
 
+import com.github.javafaker.Faker;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Random;
+import java.util.function.Supplier;
 
 @Entity
 public class User {
@@ -27,6 +30,24 @@ public class User {
         this.surname = surname;
         this.birtDate = birtDate;
         this.cardNumber = cardNumber;
+    }
+
+    public static Supplier<User> getUserSupplier() {
+        Random rdm = new Random();
+        Faker faker = new Faker();
+
+        return () -> {
+            String name = faker.name().firstName();
+            String surname = faker.name().lastName();
+
+            String birthDateStartString = "2002-01-01";
+            LocalDate birthDateStartStringParsed = LocalDate.parse(birthDateStartString);
+            LocalDate birthDate = birthDateStartStringParsed.plusDays(rdm.nextInt(730));
+
+            Long cardNumber = rdm.nextLong(1000L, 100000L);
+
+            return new User(name, surname, birthDate, cardNumber);
+        };
     }
 
     public String getName() {

@@ -4,7 +4,9 @@ import DAO.CatalogDAO;
 import DAO.LoanDAO;
 import DAO.UserDAO;
 import entities.Book;
+import entities.Loan;
 import entities.Magazine;
+import entities.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
@@ -14,7 +16,9 @@ import java.util.List;
 import java.util.function.Supplier;
 
 import static entities.Book.getBookSupplier;
+import static entities.Loan.getLoanSupplier;
 import static entities.Magazine.getMagazineSupplier;
+import static entities.User.getUserSupplier;
 
 public class Application {
     private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_db");
@@ -26,6 +30,23 @@ public class Application {
         CatalogDAO cDAO = new CatalogDAO(eM);
         LoanDAO lDAO = new LoanDAO(eM);
         UserDAO uDAO = new UserDAO(eM);
+
+        //        Users
+        Supplier<User> userSupplier = getUserSupplier();
+        List<User> userList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            userList.add(userSupplier.get());
+        }
+        userList.forEach(uDAO::save);
+
+
+//        Loans
+        Supplier<Loan> loanSupplier = getLoanSupplier();
+        List<Loan> loanList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            loanList.add(loanSupplier.get());
+        }
+        loanList.forEach(lDAO::save);
 
 //        Books
         Supplier<Book> bookSupplier = getBookSupplier();
@@ -43,8 +64,6 @@ public class Application {
         }
         magazineList.forEach(cDAO::save);
 
-
-        System.out.println("Hello World!");
 
         emf.close();
         eM.close();
