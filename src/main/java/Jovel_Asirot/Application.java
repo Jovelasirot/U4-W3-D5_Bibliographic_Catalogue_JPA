@@ -3,9 +3,7 @@ package Jovel_Asirot;
 import DAO.CatalogDAO;
 import DAO.LoanDAO;
 import DAO.UserDAO;
-import entities.Book;
 import entities.Loan;
-import entities.Magazine;
 import entities.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -15,9 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-import static entities.Book.getBookSupplier;
 import static entities.Loan.getLoanSupplier;
-import static entities.Magazine.getMagazineSupplier;
 import static entities.User.getUserSupplier;
 
 public class Application {
@@ -41,28 +37,28 @@ public class Application {
 
 
 //        Loans
-        Supplier<Loan> loanSupplier = getLoanSupplier();
+        Supplier<Loan> loanSupplier = getLoanSupplier(emf);
         List<Loan> loanList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             loanList.add(loanSupplier.get());
         }
         loanList.forEach(lDAO::save);
 
-//        Books
-        Supplier<Book> bookSupplier = getBookSupplier();
-        List<Book> bookList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            bookList.add(bookSupplier.get());
-        }
-        bookList.forEach(cDAO::save);
-
-//        Magazines
-        Supplier<Magazine> magazineSupplier = getMagazineSupplier();
-        List<Magazine> magazineList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            magazineList.add(magazineSupplier.get());
-        }
-        magazineList.forEach(cDAO::save);
+////        Books
+//        Supplier<Book> bookSupplier = getBookSupplier();
+//        List<Book> bookList = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            bookList.add(bookSupplier.get());
+//        }
+//        bookList.forEach(cDAO::save);
+//
+////        Magazines
+//        Supplier<Magazine> magazineSupplier = getMagazineSupplier();
+//        List<Magazine> magazineList = new ArrayList<>();
+//        for (int i = 0; i < 20; i++) {
+//            magazineList.add(magazineSupplier.get());
+//        }
+//        magazineList.forEach(cDAO::save);
 
 
         emf.close();

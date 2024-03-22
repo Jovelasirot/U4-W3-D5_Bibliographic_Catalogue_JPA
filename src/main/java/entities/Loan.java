@@ -1,6 +1,5 @@
 package entities;
 
-import com.github.javafaker.Faker;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -41,19 +40,17 @@ public class Loan {
     }
 
 
-    public static Supplier<Loan> getLoanSupplier() {
+    public static Supplier<Loan> getLoanSupplier(EntityManagerFactory emf) {
         Random rdm = new Random();
-        Faker faker = new Faker();
 
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("library_db");
-        EntityManager eM = emf.createEntityManager();
 
         return () -> {
+            EntityManager eM = emf.createEntityManager();
+
             TypedQuery<Catalog> queryCatalog = eM.createQuery("SELECT c from Catalog c", Catalog.class);
             List<Catalog> catalogList = queryCatalog.getResultList();
 
             Set<Catalog> elementsCatalogLoaned = new HashSet<>();
-            ;
             int numberLoanedElements = rdm.nextInt(1, 5);
             for (int i = 0; i < numberLoanedElements; i++) {
                 int rdmIndex = rdm.nextInt(catalogList.size());
@@ -69,8 +66,7 @@ public class Loan {
             LocalDate estimatedReturnDate = startLoan.plusDays(30);
 
             LocalDate actualReturnDate = startLoan.plusDays(rdm.nextInt(40));
-
-            emf.close();
+            
             eM.close();
 
             return new Loan(rdmUser, elementsCatalogLoaned, startLoan, estimatedReturnDate, actualReturnDate);
