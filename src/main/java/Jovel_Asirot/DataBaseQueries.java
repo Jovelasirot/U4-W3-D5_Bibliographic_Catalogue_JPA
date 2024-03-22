@@ -47,6 +47,7 @@ public class DataBaseQueries {
                 System.out.println("3 - Delete by ISBN");
                 System.out.println("4 - Filter catalog by year");
                 System.out.println("5 - Search by author");
+                System.out.println("6 - Search by title");
                 System.out.println("0 - Terminate the program.");
 
                 handleAction = sc.nextInt();
@@ -71,6 +72,10 @@ public class DataBaseQueries {
 
                     case 5:
                         searchByAuthor(cDAO);
+                        break;
+
+                    case 6:
+                        searchByTitle(cDAO);
                         break;
 
                     case 0:
@@ -187,5 +192,14 @@ public class DataBaseQueries {
         String authorInput = sc.nextLine();
 
         cDAO.searchByAuthor(authorInput).forEach(System.out::println);
+    }
+
+    public static void searchByTitle(CatalogDAO cDAO) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Type the title (even just parts of the title):");
+        String titleInput = sc.nextLine();
+
+        cDAO.searchByTitle(titleInput).forEach(System.out::println);
     }
 }

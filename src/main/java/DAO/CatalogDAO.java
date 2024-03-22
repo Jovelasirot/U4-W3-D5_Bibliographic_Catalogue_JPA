@@ -61,6 +61,13 @@ public class CatalogDAO {
         return authorQuery.getResultList();
     }
 
+    public List<Catalog> searchByTitle(String title) {
+        TypedQuery<Catalog> titleQuery = this.em.createQuery("SELECT c FROM Catalog c WHERE LOWER(c.title) LIKE LOWER(:title)", Catalog.class);
+        titleQuery.setParameter("title", "%" + title + "%");
+
+        return titleQuery.getResultList();
+    }
+
     public Catalog findById(long elementId) {
         Catalog catalog = em.find(Catalog.class, elementId);
         if (catalog == null) throw new EntityNotFoundException(String.valueOf(elementId));
