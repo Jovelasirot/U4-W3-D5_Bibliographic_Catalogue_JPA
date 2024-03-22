@@ -66,7 +66,7 @@ public class Loan {
             LocalDate estimatedReturnDate = startLoan.plusDays(30);
 
             LocalDate actualReturnDate = startLoan.plusDays(rdm.nextInt(40));
-            
+
             eM.close();
 
             return new Loan(rdmUser, elementsCatalogLoaned, startLoan, estimatedReturnDate, actualReturnDate);
@@ -120,7 +120,7 @@ public class Loan {
     @Override
     public String toString() {
         return "Loan{" +
-                "user=" + user +
+                user +
                 ", loanedElement=" + loanedElement +
                 ", startLoan=" + startLoan +
                 ", estimatedReturnDate=" + estimatedReturnDate +

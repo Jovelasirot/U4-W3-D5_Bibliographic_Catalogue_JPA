@@ -27,22 +27,6 @@ public class Application {
         LoanDAO lDAO = new LoanDAO(eM);
         UserDAO uDAO = new UserDAO(eM);
 
-        //        Users
-        Supplier<User> userSupplier = getUserSupplier();
-        List<User> userList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            userList.add(userSupplier.get());
-        }
-        userList.forEach(uDAO::save);
-
-
-//        Loans
-        Supplier<Loan> loanSupplier = getLoanSupplier(emf);
-        List<Loan> loanList = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            loanList.add(loanSupplier.get());
-        }
-        loanList.forEach(lDAO::save);
 
 ////        Books
 //        Supplier<Book> bookSupplier = getBookSupplier();
@@ -59,6 +43,23 @@ public class Application {
 //            magazineList.add(magazineSupplier.get());
 //        }
 //        magazineList.forEach(cDAO::save);
+
+        //        Users
+        Supplier<User> userSupplier = getUserSupplier();
+        List<User> userList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            userList.add(userSupplier.get());
+        }
+        userList.forEach(uDAO::save);
+
+
+//        Loans
+        Supplier<Loan> loanSupplier = getLoanSupplier(emf);
+        List<Loan> loanList = new ArrayList<>();
+        for (int i = 0; i < 20; i++) {
+            loanList.add(loanSupplier.get());
+        }
+        loanList.forEach(lDAO::save);
 
 
         emf.close();

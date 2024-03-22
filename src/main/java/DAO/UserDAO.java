@@ -4,6 +4,9 @@ import entities.User;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+
+import java.util.List;
 
 public class UserDAO {
     private final EntityManager em;
@@ -18,6 +21,14 @@ public class UserDAO {
         em.persist(user);
         transaction.commit();
         System.out.println("The user: " + user.getName() + " " + user.getSurname() + ", has been saved correctly");
+    }
+
+    public List<User> getUserWithCardNumber(Long cardNumber) {
+        TypedQuery<User> cardNumberQuery = this.em.createQuery("SELECT u FROM User u WHERE u.cardNumber = :cardNumber", User.class);
+        cardNumberQuery.setParameter("cardNumber", cardNumber);
+
+        return cardNumberQuery.getResultList();
+
     }
 
     public User findById(long userID) {
