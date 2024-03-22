@@ -6,6 +6,6 @@ public class NotFoundException extends RuntimeException {
     }
 
     public NotFoundException(String isbn) {
-        super("Element with the isbn: " + isbn + "is invalid.");
+        super("Element with the isbn: " + isbn + " was not found.");
     }
 }

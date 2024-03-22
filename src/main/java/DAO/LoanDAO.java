@@ -2,8 +2,8 @@ package DAO;
 
 import entities.Loan;
 import entities.User;
+import exeptions.NotFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
@@ -32,13 +32,13 @@ public class LoanDAO {
 
     public List<Loan> getExpiredLoans() {
         TypedQuery<Loan> expiredLoanQuery = em.createQuery("SELECT l FROM Loan l where l.actualReturnDate IS NULL", Loan.class);
-        
+
         return expiredLoanQuery.getResultList();
     }
 
     public User findById(long userID) {
         User user = em.find(User.class, userID);
-        if (user == null) throw new EntityNotFoundException(String.valueOf(userID));
+        if (user == null) throw new NotFoundException(userID);
         return user;
     }
 }

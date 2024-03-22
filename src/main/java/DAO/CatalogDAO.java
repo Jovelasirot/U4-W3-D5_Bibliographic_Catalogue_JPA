@@ -2,9 +2,10 @@ package DAO;
 
 import entities.Book;
 import entities.Catalog;
+import exeptions.NotFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 
 import java.util.List;
@@ -39,10 +40,10 @@ public class CatalogDAO {
                 eT.commit();
                 System.out.println("Element with ISBN: " + ISBN + " has been deleted from the catalog");
             } else {
-                System.out.println("Element not found ᕙ(⇀‸↼‶)ᕗ");
+                System.out.println("Element not found");
             }
-        } catch (EntityNotFoundException e) {
-            System.out.println(e.getMessage());
+        } catch (NoResultException e) {
+            System.out.println("Element with the isbn: " + ISBN + " was not found ᕙ(⇀‸↼‶)ᕗ.");
         }
 
     }
@@ -68,9 +69,27 @@ public class CatalogDAO {
         return titleQuery.getResultList();
     }
 
+    public List<Catalog> getFullCatalog() {
+        TypedQuery<Catalog> fullCatalog = this.em.createQuery("SELECT c FROM Catalog c", Catalog.class);
+
+        return fullCatalog.getResultList();
+    }
+
+    public List<Catalog> getAllBooks() {
+        TypedQuery<Catalog> fullCatalog = this.em.createQuery("SELECT b FROM Book b", Catalog.class);
+
+        return fullCatalog.getResultList();
+    }
+
+    public List<Catalog> getAllMagazine() {
+        TypedQuery<Catalog> fullCatalog = this.em.createQuery("SELECT m FROM Magazine m", Catalog.class);
+
+        return fullCatalog.getResultList();
+    }
+
     public Catalog findById(long elementId) {
         Catalog catalog = em.find(Catalog.class, elementId);
-        if (catalog == null) throw new EntityNotFoundException(String.valueOf(elementId));
+        if (catalog == null) throw new NotFoundException(elementId);
         return catalog;
     }
 }

@@ -44,7 +44,7 @@ public class Application {
 //        }
 //        magazineList.forEach(cDAO::save);
 
-        //        Users
+//         User
         Supplier<User> userSupplier = getUserSupplier();
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < 20; i++) {

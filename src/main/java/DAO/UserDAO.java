@@ -1,8 +1,8 @@
 package DAO;
 
 import entities.User;
+import exeptions.NotFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
@@ -23,6 +23,12 @@ public class UserDAO {
         System.out.println("The user: " + user.getName() + " " + user.getSurname() + ", has been saved correctly");
     }
 
+    public List<User> getALlUser() {
+        TypedQuery<User> fullCatalog = this.em.createQuery("SELECT u FROM User u", User.class);
+
+        return fullCatalog.getResultList();
+    }
+
     public List<User> getUserWithCardNumber(Long cardNumber) {
         TypedQuery<User> cardNumberQuery = this.em.createQuery("SELECT u FROM User u WHERE u.cardNumber = :cardNumber", User.class);
         cardNumberQuery.setParameter("cardNumber", cardNumber);
@@ -33,7 +39,7 @@ public class UserDAO {
 
     public User findById(long userID) {
         User user = em.find(User.class, userID);
-        if (user == null) throw new EntityNotFoundException(String.valueOf(userID));
+        if (user == null) throw new NotFoundException(userID);
         return user;
     }
 }

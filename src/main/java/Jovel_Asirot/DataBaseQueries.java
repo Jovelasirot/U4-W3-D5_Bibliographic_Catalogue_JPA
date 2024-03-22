@@ -12,7 +12,9 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class DataBaseQueries {
@@ -50,6 +52,8 @@ public class DataBaseQueries {
                 System.out.println("6 - Search by title");
                 System.out.println("7 - Search lent catalog element with user card number");
                 System.out.println("8 - View all expired loans");
+                System.out.println("9 - View catalog");
+                System.out.println("10 - View all users");
                 System.out.println("0 - Terminate the program.");
 
                 handleAction = sc.nextInt();
@@ -89,6 +93,14 @@ public class DataBaseQueries {
                         lDAO.getExpiredLoans().forEach(System.out::println);
                         break;
 
+                    case 9:
+                        handleViewCatalog(cDAO);
+                        break;
+
+                    case 10:
+                        uDAO.getALlUser().forEach(System.out::println);
+                        break;
+
                     case 0:
                         System.out.println("Terminating program =͟͟͞͞ =͟͟͞͞ ﾍ ( ´ Д `)ﾉ");
                         break;
@@ -117,9 +129,23 @@ public class DataBaseQueries {
         System.out.println("Title of the book:");
         String title = sc.nextLine();
 
-        System.out.println("Release date of the book (Y-M-D):");
-        String releaseDateInput = sc.nextLine();
-        LocalDate releaseDate = LocalDate.parse(releaseDateInput);
+
+        LocalDate releaseDate = null;
+        boolean validReleaseDate = false;
+        while (!validReleaseDate) {
+
+            System.out.println("Release date of the book (Y-M-D):");
+            String releaseDateInput = sc.nextLine();
+
+            try {
+                releaseDate = LocalDate.parse(releaseDateInput);
+                System.out.println("Release date added successfully");
+                validReleaseDate = true;
+
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format, try again.");
+            }
+        }
 
         int numberOfPages;
         do {
@@ -152,9 +178,22 @@ public class DataBaseQueries {
         System.out.println("Title of the magazine:");
         String title = sc.nextLine();
 
-        System.out.println("Release date of the magazine (Y-M-D):");
-        String releaseDateInput = sc.nextLine();
-        LocalDate releaseDate = LocalDate.parse(releaseDateInput);
+        LocalDate releaseDate = null;
+        boolean validReleaseDate = false;
+        while (!validReleaseDate) {
+
+            System.out.println("Release date of the magazine (Y-M-D):");
+            String releaseDateInput = sc.nextLine();
+
+            try {
+                releaseDate = LocalDate.parse(releaseDateInput);
+                System.out.println("Release date added successfully");
+                validReleaseDate = true;
+
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format, try again.");
+            }
+        }
 
         int numberOfPages;
         do {
@@ -223,4 +262,25 @@ public class DataBaseQueries {
         lDAO.getLoansWithCardNumber(cardNumberInput).forEach(System.out::println);
     }
 
+    public static void handleViewCatalog(CatalogDAO cDAO) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("What do you want to view");
+        System.out.println("C - Catalog");
+        System.out.println("B - Book list");
+        System.out.println("M - Magazine list");
+
+        String viewInput = sc.nextLine();
+        if (Objects.equals(viewInput, "C")) {
+            cDAO.getFullCatalog().forEach(System.out::println);
+
+        } else if (Objects.equals(viewInput, "B")) {
+            cDAO.getAllBooks().forEach(System.out::println);
+
+        } else if (Objects.equals(viewInput, "M")) {
+            cDAO.getAllMagazine().forEach(System.out::println);
+        } else {
+            System.out.println("Invalid input");
+        }
+    }
 }
