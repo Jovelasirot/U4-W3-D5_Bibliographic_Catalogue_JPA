@@ -23,7 +23,7 @@ public class Loan {
     @JoinTable(name = "loan_catalog",
             joinColumns = @JoinColumn(name = "loan_id"),
             inverseJoinColumns = @JoinColumn(name = "element_loaned_id"))
-    private Set<Catalog> loanedElement = new HashSet<>();
+    private Set<Catalog> loanedElements = new HashSet<>();
     private LocalDate startLoan;
     private LocalDate estimatedReturnDate;
     private LocalDate actualReturnDate;
@@ -31,9 +31,9 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(User user, Set<Catalog> loanedElement, LocalDate startLoan, LocalDate estimatedReturnDate, LocalDate actualReturnDate) {
+    public Loan(User user, Set<Catalog> loanedElements, LocalDate startLoan, LocalDate estimatedReturnDate, LocalDate actualReturnDate) {
         this.user = user;
-        this.loanedElement = loanedElement;
+        this.loanedElements = loanedElements;
         this.startLoan = startLoan;
         this.estimatedReturnDate = estimatedReturnDate;
         this.actualReturnDate = actualReturnDate;
@@ -85,8 +85,8 @@ public class Loan {
         this.user = user;
     }
 
-    public Set<Catalog> getLoanedElement() {
-        return loanedElement;
+    public Set<Catalog> getLoanedElements() {
+        return loanedElements;
     }
 
     public LocalDate getStartLoan() {
@@ -125,7 +125,7 @@ public class Loan {
     public String toString() {
         return "Loan{" +
                 user +
-                ", loanedElement=" + loanedElement +
+                ", loanedElement=" + loanedElements +
                 ", startLoan=" + startLoan +
                 ", estimatedReturnDate=" + estimatedReturnDate +
                 ", actualReturnDate=" + actualReturnDate +
