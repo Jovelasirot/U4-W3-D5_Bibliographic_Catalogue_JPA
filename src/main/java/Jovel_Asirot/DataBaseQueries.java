@@ -49,6 +49,7 @@ public class DataBaseQueries {
                 System.out.println("5 - Search by author");
                 System.out.println("6 - Search by title");
                 System.out.println("7 - Search lent catalog element with user card number");
+                System.out.println("8 - View all expired loans");
                 System.out.println("0 - Terminate the program.");
 
                 handleAction = sc.nextInt();
@@ -81,6 +82,11 @@ public class DataBaseQueries {
 
                     case 7:
                         searchLentElementsWithUserCardNumber(lDAO);
+                        break;
+
+
+                    case 8:
+                        lDAO.getExpiredLoans().forEach(System.out::println);
                         break;
 
                     case 0:

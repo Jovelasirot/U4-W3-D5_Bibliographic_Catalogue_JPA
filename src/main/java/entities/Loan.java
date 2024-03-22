@@ -65,7 +65,11 @@ public class Loan {
             LocalDate startLoan = LocalDate.now().plusDays(rdm.nextInt(365));
             LocalDate estimatedReturnDate = startLoan.plusDays(30);
 
-            LocalDate actualReturnDate = startLoan.plusDays(rdm.nextInt(40));
+
+            LocalDate actualReturnDate = null;
+            if (rdm.nextBoolean()) {
+                actualReturnDate = startLoan.plusDays(rdm.nextInt(29));
+            }
 
             eM.close();
 
