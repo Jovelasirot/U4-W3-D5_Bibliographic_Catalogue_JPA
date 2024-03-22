@@ -6,6 +6,8 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
+
 public class CatalogDAO {
     private final EntityManager em;
 
@@ -42,6 +44,13 @@ public class CatalogDAO {
             System.out.println(e.getMessage());
         }
 
+    }
+
+    public List<Catalog> catalogListBasedOnYear(int year) {
+        TypedQuery<Catalog> catalogYearListQuery = this.em.createQuery("SELECT c FROM Catalog c WHERE EXTRACT(YEAR FROM c.releaseDate) = :year", Catalog.class);
+        catalogYearListQuery.setParameter("year", year);
+
+        return catalogYearListQuery.getResultList();
     }
 
     public Catalog findById(long elementId) {

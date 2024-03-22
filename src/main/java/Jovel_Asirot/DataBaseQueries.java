@@ -40,6 +40,7 @@ public class DataBaseQueries {
             System.out.println("1 - Add book");
             System.out.println("2 - Add magazine");
             System.out.println("3 - Delete by ISBN");
+            System.out.println("4 - Filter catalog by year");
             System.out.println("0 - Terminate the program.");
 
             handleAction = sc.nextInt();
@@ -57,7 +58,11 @@ public class DataBaseQueries {
                 case 3:
                     deleteWithISBN(cDAO);
                     break;
-                    
+
+                case 4:
+                    searchByYear(cDAO);
+                    break;
+
                 case 0:
                     System.out.println("Terminating program =͟͟͞͞ =͟͟͞͞ ﾍ ( ´ Д `)ﾉ");
                     break;
@@ -150,5 +155,14 @@ public class DataBaseQueries {
         String isbn = sc.nextLine();
 
         cDAO.deleteByISBN(isbn);
+    }
+
+    public static void searchByYear(CatalogDAO cDAO) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Type the year you want to filter with the catalog:");
+        int yearInput = sc.nextInt();
+
+        cDAO.catalogListBasedOnYear(yearInput).forEach(System.out::println);
     }
 }
