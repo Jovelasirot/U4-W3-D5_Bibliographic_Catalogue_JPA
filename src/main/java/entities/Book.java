@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 
 @Entity
 public class Book extends Catalog {
+
     private String author;
     private String genre;
 
@@ -16,6 +17,9 @@ public class Book extends Catalog {
         super(ISBN, title, releaseDate, numberPages);
         this.author = author;
         this.genre = genre;
+    }
+
+    public Book() {
     }
 
     public static Supplier<Book> getBookSupplier() {

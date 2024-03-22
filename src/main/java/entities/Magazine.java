@@ -12,12 +12,16 @@ import java.util.function.Supplier;
 
 @Entity
 public class Magazine extends Catalog {
+
     @Enumerated(EnumType.STRING)
     private Frequency frequency;
 
     public Magazine(String ISBN, String title, LocalDate releaseDate, int numberPages, Frequency frequency) {
         super(ISBN, title, releaseDate, numberPages);
         this.frequency = frequency;
+    }
+
+    public Magazine() {
     }
 
     public static Supplier<Magazine> getMagazineSupplier() {
@@ -37,6 +41,7 @@ public class Magazine extends Catalog {
             return new Magazine(isbn, title, releaseDate, numberPage, frequency);
         };
     }
+
 
     public Frequency getFrequency() {
         return frequency;

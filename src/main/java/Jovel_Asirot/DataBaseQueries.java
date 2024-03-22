@@ -39,6 +39,7 @@ public class DataBaseQueries {
             System.out.println("What do you want to do?");
             System.out.println("1 - Add book");
             System.out.println("2 - Add magazine");
+            System.out.println("3 - Delete by ISBN");
             System.out.println("0 - Terminate the program.");
 
             handleAction = sc.nextInt();
@@ -53,6 +54,10 @@ public class DataBaseQueries {
                     addMagazine(cDAO);
                     break;
 
+                case 3:
+                    deleteWithISBN(cDAO);
+                    break;
+                    
                 case 0:
                     System.out.println("Terminating program =͟͟͞͞ =͟͟͞͞ ﾍ ( ´ Д `)ﾉ");
                     break;
@@ -136,5 +141,14 @@ public class DataBaseQueries {
         Magazine newMagazine = new Magazine(isbn, title, releaseDate, numberOfPages, frequency);
         cDAO.save(newMagazine);
 
+    }
+
+    public static void deleteWithISBN(CatalogDAO cDAO) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Type the ISBN you want to delete:");
+        String isbn = sc.nextLine();
+
+        cDAO.deleteByISBN(isbn);
     }
 }

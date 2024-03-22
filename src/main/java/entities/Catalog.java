@@ -20,6 +20,9 @@ public class Catalog {
     @Column(name = "number_pages")
     private int numberPages;
 
+    public Catalog() {
+    }
+
     public Catalog(String ISBN, String title, LocalDate releaseDate, int numberPages) {
         this.ISBN = ISBN;
         this.title = title;
