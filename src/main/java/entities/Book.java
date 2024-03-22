@@ -3,6 +3,7 @@ package entities;
 import com.github.javafaker.Faker;
 import jakarta.persistence.Entity;
 
+import java.time.LocalDate;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -11,7 +12,7 @@ public class Book extends Catalog {
     private String author;
     private String genre;
 
-    public Book(String ISBN, String title, int releaseDate, int numberPages, String author, String genre) {
+    public Book(String ISBN, String title, LocalDate releaseDate, int numberPages, String author, String genre) {
         super(ISBN, title, releaseDate, numberPages);
         this.author = author;
         this.genre = genre;
@@ -24,7 +25,7 @@ public class Book extends Catalog {
         return () -> {
             String isbn = faker.code().isbn10();
             String title = faker.book().title();
-            int releaseDate = rdm.nextInt(1950, 2024);
+            LocalDate releaseDate = LocalDate.now().minusDays(rdm.nextInt(730));
             int numberPage = rdm.nextInt(20, 500);
             String author = faker.book().author();
             String genre = faker.book().genre();

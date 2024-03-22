@@ -64,6 +64,14 @@ public class Loan {
         this.estimatedReturnDate = estimatedReturnDate;
     }
 
+    public Long getIdLoan() {
+        return idLoan;
+    }
+
+    public void setIdLoan(Long idLoan) {
+        this.idLoan = idLoan;
+    }
+
     public LocalDate getActualReturnDate() {
         return actualReturnDate;
     }

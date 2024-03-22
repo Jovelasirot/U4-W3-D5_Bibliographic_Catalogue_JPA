@@ -61,6 +61,14 @@ public class User {
         this.cardNumber = cardNumber;
     }
 
+    public Long getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(Long idUser) {
+        this.idUser = idUser;
+    }
+
     @Override
     public String toString() {
         return "User{" +

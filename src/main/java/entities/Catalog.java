@@ -2,6 +2,8 @@ package entities;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Catalog {
@@ -14,11 +16,11 @@ public class Catalog {
     private String ISBN;
     private String title;
     @Column(name = "release_date")
-    private int releaseDate;
+    private LocalDate releaseDate;
     @Column(name = "number_pages")
     private int numberPages;
 
-    public Catalog(String ISBN, String title, int releaseDate, int numberPages) {
+    public Catalog(String ISBN, String title, LocalDate releaseDate, int numberPages) {
         this.ISBN = ISBN;
         this.title = title;
         this.releaseDate = releaseDate;
@@ -41,11 +43,19 @@ public class Catalog {
         this.title = title;
     }
 
-    public int getReleaseDate() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public LocalDate getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(int releaseDate) {
+    public void setReleaseDate(LocalDate releaseDate) {
         this.releaseDate = releaseDate;
     }
 
