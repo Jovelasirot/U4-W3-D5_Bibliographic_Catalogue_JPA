@@ -125,7 +125,7 @@ public class Loan {
     public String toString() {
         return "Loan{" +
                 user +
-                ", loanedElement=" + loanedElements +
+                ", loanedElements=" + loanedElements +
                 ", startLoan=" + startLoan +
                 ", estimatedReturnDate=" + estimatedReturnDate +
                 ", actualReturnDate=" + actualReturnDate +
